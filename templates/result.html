@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>{{data.question}}</title>
+{% endblock head %}
+
+{% block content %}
+    <h1>Thank you for your vote</h1>
+    - {{data.question}}
+    <p>
+    - {{vote}}
+
+{% endblock content %}

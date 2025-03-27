@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Form</title>
-    <link rel="stylesheet" href="{{url_for('static', filename = 'menu.css')}}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1>Add pizza</h1>
     <form method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br>
         
-        <label for="ingridients">Imgridients:</label>
+        <label for="ingridients">Ingridients:</label>
         <input type="text" id="ingridients" name="ingridients" required><br>
         
         <label for="price">Price:</label>
@@ -26,5 +21,4 @@
         <li>{{ pizza.name }}: {{ pizza.ingridients }} - {{ pizza.price }} </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+    {% endblock content %}

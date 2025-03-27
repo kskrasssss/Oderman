@@ -63,6 +63,7 @@ class Form(Base):
 Base.metadata.create_all(engine)
 Base.metadata.bind = engine
 
+
 @app.route('/form', methods=['GET', 'POST'])
 def form():
     if request.method == 'POST':
@@ -78,6 +79,36 @@ def form():
 
     pizzas = session.query(Form).all()
     return render_template('form.html', pizzas=pizzas)
+
+filename = 'data.txt'
+
+poll_data = {
+    'question': 'What dish do you like the most?',
+    'fields': ['Mozzarela', 'Carbonara', 'Pepperoni', 'Four cheese']
+}
+
+@app.route('/poll')
+def poll():
+    return render_template('poll.html', data=poll_data)
+
+@app.route('/poll_result')
+def poll_result():
+    vote = request.args.get("dish")
+    if vote is not None:
+        with open(filename, 'a') as f:
+            f.write(vote + '\n')
+    else:
+        vote = 'No vote' 
+    return render_template('result.html', data=poll_data, vote=vote)
+
+@app.route('/statistics')
+def stat():
+    try:
+        with open('data.txt', 'r', encoding='utf-8') as file:
+            content = file.read()
+    except FileNotFoundError:
+        content = "Файл data.txt не знайдено!"
+    return render_template('statistics.html', content=content)
 
 if __name__ == '__main__':
     app.run(port= 7000, debug=True)
